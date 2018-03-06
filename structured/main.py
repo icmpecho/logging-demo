@@ -28,4 +28,3 @@ def process(id, fail):
 if __name__ == '__main__':
     while True:
         process(uuid4().hex, randint(0, 9) == 0)
-
