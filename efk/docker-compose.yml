@@ -1,0 +1,33 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.2
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+  fluentd:
+    build: ./fluent
+    ports:
+      - 24224:24224
+    environment:
+      FLUENTD_CONF: config/fluent.conf
+    volumes:
+      - ./fluent/config:/fluentd/etc/config
+  # fluent-bit:
+  #   image: fluent/fluent-bit:0.12
+  #   ports:
+  #     - 24224:24224
+  #   command: /fluent-bit/bin/fluent-bit -i forward -o es -p Host=elasticsearch -p Logstash_Format=True
+volumes:
+  esdata:
+    driver: local
+

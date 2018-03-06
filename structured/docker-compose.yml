@@ -1,0 +1,13 @@
+version: '2'
+services:
+  processor:
+    build: .
+    volumes:
+    - .:/app
+    working_dir: /app
+    command: python main.py
+    logging:
+      driver: fluentd
+      options:
+        tag: json.{{.ID}}
+
