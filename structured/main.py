@@ -26,5 +26,7 @@ def process(id, fail):
 
 
 if __name__ == '__main__':
+    error_rate = randint(0, 9)
+    logger.info("Starting processor", error_rate=error_rate)
     while True:
         process(uuid4().hex, randint(0, 9) == 0)
